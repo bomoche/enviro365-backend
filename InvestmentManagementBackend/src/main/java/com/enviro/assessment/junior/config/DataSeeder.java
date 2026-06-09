@@ -7,6 +7,7 @@ import com.enviro.assessment.junior.repository.InvestmentProductRepository;
 import com.enviro.assessment.junior.repository.InvestorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class DataSeeder implements CommandLineRunner {
 
     private final InvestorRepository investorRepository;
     private final InvestmentProductRepository productRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
@@ -37,6 +39,7 @@ public class DataSeeder implements CommandLineRunner {
                 .firstName("Thabo")
                 .lastName("Nkosi")
                 .email("thabo.nkosi@enviro365.co.za")
+                .password(passwordEncoder.encode("password123"))
                 .dateOfBirth(LocalDate.of(1955, 3, 15))
                 .build();
 
