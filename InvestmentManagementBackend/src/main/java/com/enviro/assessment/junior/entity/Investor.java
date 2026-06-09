@@ -1,6 +1,5 @@
 package com.enviro.assessment.junior.entity;
 
-import com.enviro.assessment.junior.entity.InvestmentProduct;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -19,6 +18,9 @@ public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private String firstName;
