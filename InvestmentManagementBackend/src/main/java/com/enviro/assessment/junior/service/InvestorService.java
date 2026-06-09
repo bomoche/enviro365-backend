@@ -7,6 +7,7 @@ import com.enviro.assessment.junior.exception.InvestorNotFoundException;
 import com.enviro.assessment.junior.repository.InvestorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -17,13 +18,13 @@ public class InvestorService {
 
     private final InvestorRepository investorRepository;
 
+    @Transactional(readOnly = true)
     public PortfolioResponseDto getPortfolio(Long investorId) {
-
         // Fetch investor or throw 404
         Investor investor = investorRepository.findById(investorId)
                 .orElseThrow(() -> new InvestorNotFoundException(investorId));
 
-        // Calculate age dynamically — never stored in the database
+        // Calculate age dynamically
         int age = Period.between(investor.getDateOfBirth(), LocalDate.now()).getYears();
 
         // Map products to DTOs — entities never leave this layer

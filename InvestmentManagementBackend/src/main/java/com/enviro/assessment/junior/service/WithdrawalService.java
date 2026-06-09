@@ -75,6 +75,7 @@ public class WithdrawalService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public List<WithdrawalResponseDto> getWithdrawalHistory(Long investorId) {
 
         // Verify investor exists before fetching history
@@ -97,6 +98,7 @@ public class WithdrawalService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public String exportToCsv(Long investorId) {
 
         if (!investorRepository.existsById(investorId)) {
@@ -111,10 +113,10 @@ public class WithdrawalService {
 
         for (WithdrawalNotice w : notices) {
             csv.append(w.getCreatedAt()).append(",")
-               .append(w.getProduct().getProductName()).append(",")
-               .append(w.getProduct().getProductType()).append(",")
-               .append(w.getAmount()).append(",")
-               .append(w.getBalanceAfterWithdrawal()).append("\n");
+            .append(w.getProduct().getProductName()).append(",")
+            .append(w.getProduct().getProductType()).append(",")
+            .append(w.getAmount()).append(",")
+            .append(w.getBalanceAfterWithdrawal()).append("\n");
         }
 
         return csv.toString();
